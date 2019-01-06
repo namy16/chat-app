@@ -3,7 +3,7 @@ Chat App
 
 Install Dependencies
 
-## `npm install`
+## `npm install --save`
 
 Run client
 

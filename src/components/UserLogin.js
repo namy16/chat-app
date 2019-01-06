@@ -8,7 +8,7 @@ import React from 'react';
 class UserLogin extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: '' };
+        this.state = { username: '' ,isFetching:false};
 
         // Bind 'this' to event handlers. React ES6 does not do this by default
         this.usernameChangeHandler = this.usernameChangeHandler.bind(this);
@@ -20,6 +20,7 @@ class UserLogin extends React.Component {
     }
 
     usernameSubmitHandler(event) {
+        this.setState({isFetching:true});
         event.preventDefault();
         let users = this.props.users;
         let currentUserName = this.state.username;
@@ -34,6 +35,7 @@ class UserLogin extends React.Component {
     }
 
     sendToChatRoom(user){
+        this.setState({isFetching:false});
         this.props.history.push({
             pathname: "/chat",
             state: {userId:user.id}
@@ -51,7 +53,6 @@ class UserLogin extends React.Component {
         }).then((response) => {
             console.log(response.data);
             this.sendToChatRoom(response.data);
-
         });
     }
 
@@ -70,7 +71,9 @@ class UserLogin extends React.Component {
                         required />
                 </div>
                 <input type="submit" className="submit" value="Submit" />
+                {this.state.isFetching&&<p>Loading....</p>}
             </form>
+
         );
     }
 
